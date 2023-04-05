@@ -18,10 +18,6 @@ func (p *GormProvider) GetStore(ctx context.Context, v *ListFilter, pagination *
 
 	query := p.db_main.Model(&pb.StoreORM{})
 
-	if v.Data != nil {
-		query = query.Where(v.Data)
-	}
-
 	query = query.Scopes(FilterScoope(v.Filter), QueryScoop(v.Query)).Order("updated_at DESC")
 	query = query.Scopes(Paginate(data, pagination, query), CustomOrderScoop(v.CustomOrder), Sort(v.Sort), Sort(&pb.Sort{Column: "updated_at", Direction: "DESC"}))
 
