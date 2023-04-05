@@ -47,4 +47,59 @@ service ApiService {
         };
     };
 
+    rpc StoreList(StoreListRequest) returns (StoreListResponse) {
+        option (google.api.http) = {
+            get: "/store",
+        };
+        option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+            tags: ["Store"]
+            security: {}
+            summary: "Store List"
+            description: "This API for retrieve list of store"
+        };
+    };
+
+    rpc StoreDetail(StoreDetailRequest) returns (StoreDetailResponse) {
+        option (google.api.http) = {
+            get: "/store/{id}",
+        };
+        option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+            tags: ["Store"]
+            security: {}
+            summary: "Store Detail"
+            description: "This API for retrieve detail of a store"
+        };
+    };
+
+    rpc StoreCreate(StoreCreateRequest) returns (StoreCreateResponse) {
+        option (google.api.http) = {
+            post: "/store",
+            body: "*",
+            additional_bindings: [
+				{
+					post: "/store/{id}"
+					body: "*"
+				}
+			]
+        };
+        option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+            tags: ["Store"]
+            security: {}
+            summary: "Store Update or Create"
+            description: "This API for update or create a store"
+        };
+    };
+
+    rpc StoreDelete(StoreDeleteRequest) returns (StoreDeleteResponse) {
+        option (google.api.http) = {
+            delete: "/store/{id}",
+        };
+        option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+            tags: ["Store"]
+            security: {}
+            summary: "Store Delete"
+            description: "This API for delete a store"
+        };
+    };
+
 }

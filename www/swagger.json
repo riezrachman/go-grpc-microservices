@@ -65,6 +65,226 @@
         ],
         "security": []
       }
+    },
+    "/store": {
+      "get": {
+        "summary": "Store List",
+        "description": "This API for retrieve list of store",
+        "operationId": "ApiService_StoreList",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1StoreListResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "limit",
+            "description": "Limit data per page. Default value '-1' for disable limit",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "page",
+            "description": "Page number to get data. Default value '-1' for disable page",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "filter",
+            "description": "Create 'AND' queries \n Format: [key:value,key:value] \n Example: filter=name:Toko,store_id:1 =\u003e WHERE store_id = 1 AND name = 'Toko' \n Expressions: \n - 'key:value' =\u003e 'key = value' \n - 'key:%%value' =\u003e 'key LIKE %value%' \n - 'key:%!value' =\u003e 'key ILIKE %value%' \n - 'key:\u003e=value' =\u003e 'key \u003e= value' \n - 'key:\u003c=value' =\u003e 'key \u003c= value' \n - 'key1:\u003e=value1,key2:\u003c=value2' =\u003e 'key1 \u003e= value1 AND key2 \u003c= value2' BETWEEN EXAMPLE \n - 'key1.nestedKey1:value' =\u003e 'key1-\u003e\u003enestedKey1 = value'",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "query",
+            "description": "Create 'OR' queries \n Format: [key1,key2,key3:value] \n Example: query=name,description:Toko =\u003e WHERE name = 'Toko' OR type = 'Toko' \n Expressions: \n - 'key:value' =\u003e 'key = value' \n - 'key:%%value' =\u003e 'key LIKE %value%' \n - 'key:%!value' =\u003e 'key ILIKE %value%' \n - 'key1.nestedKey1:value' =\u003e 'key1-\u003e\u003enestedKey1 = value'",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "sort",
+            "description": "Order data by column name",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "dir",
+            "description": "Order direction",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "DESC",
+              "ASC"
+            ],
+            "default": "DESC"
+          }
+        ],
+        "tags": [
+          "Store"
+        ],
+        "security": []
+      },
+      "post": {
+        "summary": "Store Update or Create",
+        "description": "This API for update or create a store",
+        "operationId": "ApiService_StoreCreate",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1StoreCreateResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1StoreCreateRequest"
+            }
+          }
+        ],
+        "tags": [
+          "Store"
+        ],
+        "security": []
+      }
+    },
+    "/store/{id}": {
+      "get": {
+        "summary": "Store Detail",
+        "description": "This API for retrieve detail of a store",
+        "operationId": "ApiService_StoreDetail",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1StoreDetailResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "tags": [
+          "Store"
+        ],
+        "security": []
+      },
+      "delete": {
+        "summary": "Store Delete",
+        "description": "This API for delete a store",
+        "operationId": "ApiService_StoreDelete",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1StoreDeleteResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "tags": [
+          "Store"
+        ],
+        "security": []
+      },
+      "post": {
+        "summary": "Store Update or Create",
+        "description": "This API for update or create a store",
+        "operationId": "ApiService_StoreCreate2",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1StoreCreateResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/v1Store"
+                }
+              }
+            }
+          }
+        ],
+        "tags": [
+          "Store"
+        ],
+        "security": []
+      }
     }
   },
   "definitions": {
@@ -95,6 +315,14 @@
         }
       }
     },
+    "v1Direction": {
+      "type": "string",
+      "enum": [
+        "DESC",
+        "ASC"
+      ],
+      "default": "DESC"
+    },
     "v1HealthCheckResponse": {
       "type": "object",
       "properties": {
@@ -107,6 +335,202 @@
         },
         "message": {
           "type": "string"
+        }
+      }
+    },
+    "v1PaginationResponse": {
+      "type": "object",
+      "properties": {
+        "limit": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "page": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "totalRows": {
+          "type": "string",
+          "format": "int64"
+        },
+        "totalPages": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "v1Product": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32",
+          "readOnly": true
+        },
+        "title": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        },
+        "price": {
+          "type": "number",
+          "format": "float"
+        },
+        "description": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "readOnly": true
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "readOnly": true
+        }
+      }
+    },
+    "v1Store": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32",
+          "readOnly": true
+        },
+        "name": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        },
+        "address": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "operationalTimeStart": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "operationalTimeEnd": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "products": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1Product"
+          },
+          "readOnly": true
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "readOnly": true
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "readOnly": true
+        },
+        "deletedAt": {
+          "type": "string",
+          "format": "date-time",
+          "readOnly": true
+        }
+      }
+    },
+    "v1StoreCreateRequest": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "data": {
+          "$ref": "#/definitions/v1Store"
+        }
+      }
+    },
+    "v1StoreCreateResponse": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "boolean"
+        },
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "data": {
+          "$ref": "#/definitions/v1Store"
+        }
+      }
+    },
+    "v1StoreDeleteResponse": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "boolean"
+        },
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "data": {
+          "$ref": "#/definitions/v1Store"
+        }
+      }
+    },
+    "v1StoreDetailResponse": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "boolean"
+        },
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "data": {
+          "$ref": "#/definitions/v1Store"
+        }
+      }
+    },
+    "v1StoreListResponse": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "boolean"
+        },
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1Store"
+          }
+        },
+        "pagination": {
+          "$ref": "#/definitions/v1PaginationResponse"
         }
       }
     }

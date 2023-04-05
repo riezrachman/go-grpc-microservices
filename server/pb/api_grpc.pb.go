@@ -23,6 +23,10 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ApiServiceClient interface {
 	HealthCheck(ctx context.Context, in *HealthCheckRequest, opts ...grpc.CallOption) (*HealthCheckResponse, error)
+	StoreList(ctx context.Context, in *StoreListRequest, opts ...grpc.CallOption) (*StoreListResponse, error)
+	StoreDetail(ctx context.Context, in *StoreDetailRequest, opts ...grpc.CallOption) (*StoreDetailResponse, error)
+	StoreCreate(ctx context.Context, in *StoreCreateRequest, opts ...grpc.CallOption) (*StoreCreateResponse, error)
+	StoreDelete(ctx context.Context, in *StoreDeleteRequest, opts ...grpc.CallOption) (*StoreDeleteResponse, error)
 }
 
 type apiServiceClient struct {
@@ -42,11 +46,51 @@ func (c *apiServiceClient) HealthCheck(ctx context.Context, in *HealthCheckReque
 	return out, nil
 }
 
+func (c *apiServiceClient) StoreList(ctx context.Context, in *StoreListRequest, opts ...grpc.CallOption) (*StoreListResponse, error) {
+	out := new(StoreListResponse)
+	err := c.cc.Invoke(ctx, "/swing.v1.ApiService/StoreList", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *apiServiceClient) StoreDetail(ctx context.Context, in *StoreDetailRequest, opts ...grpc.CallOption) (*StoreDetailResponse, error) {
+	out := new(StoreDetailResponse)
+	err := c.cc.Invoke(ctx, "/swing.v1.ApiService/StoreDetail", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *apiServiceClient) StoreCreate(ctx context.Context, in *StoreCreateRequest, opts ...grpc.CallOption) (*StoreCreateResponse, error) {
+	out := new(StoreCreateResponse)
+	err := c.cc.Invoke(ctx, "/swing.v1.ApiService/StoreCreate", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *apiServiceClient) StoreDelete(ctx context.Context, in *StoreDeleteRequest, opts ...grpc.CallOption) (*StoreDeleteResponse, error) {
+	out := new(StoreDeleteResponse)
+	err := c.cc.Invoke(ctx, "/swing.v1.ApiService/StoreDelete", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ApiServiceServer is the server API for ApiService service.
 // All implementations must embed UnimplementedApiServiceServer
 // for forward compatibility
 type ApiServiceServer interface {
 	HealthCheck(context.Context, *HealthCheckRequest) (*HealthCheckResponse, error)
+	StoreList(context.Context, *StoreListRequest) (*StoreListResponse, error)
+	StoreDetail(context.Context, *StoreDetailRequest) (*StoreDetailResponse, error)
+	StoreCreate(context.Context, *StoreCreateRequest) (*StoreCreateResponse, error)
+	StoreDelete(context.Context, *StoreDeleteRequest) (*StoreDeleteResponse, error)
 	mustEmbedUnimplementedApiServiceServer()
 }
 
@@ -56,6 +100,18 @@ type UnimplementedApiServiceServer struct {
 
 func (UnimplementedApiServiceServer) HealthCheck(context.Context, *HealthCheckRequest) (*HealthCheckResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method HealthCheck not implemented")
+}
+func (UnimplementedApiServiceServer) StoreList(context.Context, *StoreListRequest) (*StoreListResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StoreList not implemented")
+}
+func (UnimplementedApiServiceServer) StoreDetail(context.Context, *StoreDetailRequest) (*StoreDetailResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StoreDetail not implemented")
+}
+func (UnimplementedApiServiceServer) StoreCreate(context.Context, *StoreCreateRequest) (*StoreCreateResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StoreCreate not implemented")
+}
+func (UnimplementedApiServiceServer) StoreDelete(context.Context, *StoreDeleteRequest) (*StoreDeleteResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StoreDelete not implemented")
 }
 func (UnimplementedApiServiceServer) mustEmbedUnimplementedApiServiceServer() {}
 
@@ -88,6 +144,78 @@ func _ApiService_HealthCheck_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ApiService_StoreList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StoreListRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ApiServiceServer).StoreList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/swing.v1.ApiService/StoreList",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ApiServiceServer).StoreList(ctx, req.(*StoreListRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ApiService_StoreDetail_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StoreDetailRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ApiServiceServer).StoreDetail(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/swing.v1.ApiService/StoreDetail",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ApiServiceServer).StoreDetail(ctx, req.(*StoreDetailRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ApiService_StoreCreate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StoreCreateRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ApiServiceServer).StoreCreate(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/swing.v1.ApiService/StoreCreate",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ApiServiceServer).StoreCreate(ctx, req.(*StoreCreateRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ApiService_StoreDelete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StoreDeleteRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ApiServiceServer).StoreDelete(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/swing.v1.ApiService/StoreDelete",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ApiServiceServer).StoreDelete(ctx, req.(*StoreDeleteRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // ApiService_ServiceDesc is the grpc.ServiceDesc for ApiService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -98,6 +226,22 @@ var ApiService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "HealthCheck",
 			Handler:    _ApiService_HealthCheck_Handler,
+		},
+		{
+			MethodName: "StoreList",
+			Handler:    _ApiService_StoreList_Handler,
+		},
+		{
+			MethodName: "StoreDetail",
+			Handler:    _ApiService_StoreDetail_Handler,
+		},
+		{
+			MethodName: "StoreCreate",
+			Handler:    _ApiService_StoreCreate_Handler,
+		},
+		{
+			MethodName: "StoreDelete",
+			Handler:    _ApiService_StoreDelete_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
