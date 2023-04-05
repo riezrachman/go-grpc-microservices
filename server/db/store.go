@@ -16,7 +16,7 @@ import (
 
 func (p *GormProvider) GetStore(ctx context.Context, v *ListFilter, pagination *pb.PaginationResponse) (data []*pb.StoreORM, err error) {
 
-	query := p.db_main.Model(&pb.StoreORM{})
+	query := p.db_main.Model(&pb.StoreORM{}).Preload("Products")
 
 	query = query.Scopes(FilterScoope(v.Filter), QueryScoop(v.Query)).Order("updated_at DESC")
 	query = query.Scopes(Paginate(data, pagination, query), CustomOrderScoop(v.CustomOrder), Sort(v.Sort), Sort(&pb.Sort{Column: "updated_at", Direction: "DESC"}))
@@ -34,7 +34,7 @@ func (p *GormProvider) GetStore(ctx context.Context, v *ListFilter, pagination *
 
 func (p *GormProvider) GetStoreDetail(ctx context.Context, v *pb.StoreORM) (data *pb.StoreORM, err error) {
 
-	query := p.db_main.Model(&pb.StoreORM{})
+	query := p.db_main.Model(&pb.StoreORM{}).Preload("Products")
 
 	query = query.Where(v)
 
@@ -60,6 +60,14 @@ func (p *GormProvider) UpdateOrCreateStore(ctx context.Context, data *pb.StoreOR
 		}
 
 		m := structs.Map(data)
+
+		for k := range m {
+			if k == "CreatedAt" || k == "DeletedAt" {
+				delete(m, k)
+			} else if k == "UpdatedAt" {
+				m[k] = time.Now()
+			}
+		}
 
 		if err := p.db_main.Model(&model).Updates(&m).Error; err != nil {
 			logrus.Errorf("[db][func: UpdateOrCreateStore] Failed when execute query: %s", err)

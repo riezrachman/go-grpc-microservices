@@ -65,6 +65,14 @@ func (p *GormProvider) UpdateOrCreateProduct(ctx context.Context, data *pb.Produ
 
 		m := structs.Map(data)
 
+		for k := range m {
+			if k == "CreatedAt" || k == "DeletedAt" {
+				delete(m, k)
+			} else if k == "UpdatedAt" {
+				m[k] = time.Now()
+			}
+		}
+
 		if err := p.db_main.Model(&model).Updates(&m).Error; err != nil {
 			logrus.Errorf("[db][func: UpdateOrCreateProduct] Failed when execute query: %s", err)
 			if errors.Is(err, gorm.ErrRecordNotFound) {
