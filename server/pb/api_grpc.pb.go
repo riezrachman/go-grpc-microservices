@@ -27,6 +27,10 @@ type ApiServiceClient interface {
 	StoreDetail(ctx context.Context, in *StoreDetailRequest, opts ...grpc.CallOption) (*StoreDetailResponse, error)
 	StoreCreate(ctx context.Context, in *StoreCreateRequest, opts ...grpc.CallOption) (*StoreCreateResponse, error)
 	StoreDelete(ctx context.Context, in *StoreDeleteRequest, opts ...grpc.CallOption) (*StoreDeleteResponse, error)
+	ProductList(ctx context.Context, in *ProductListRequest, opts ...grpc.CallOption) (*ProductListResponse, error)
+	ProductDetail(ctx context.Context, in *ProductDetailRequest, opts ...grpc.CallOption) (*ProductDetailResponse, error)
+	ProductCreate(ctx context.Context, in *ProductCreateRequest, opts ...grpc.CallOption) (*ProductCreateResponse, error)
+	ProductDelete(ctx context.Context, in *ProductDeleteRequest, opts ...grpc.CallOption) (*ProductDeleteResponse, error)
 }
 
 type apiServiceClient struct {
@@ -82,6 +86,42 @@ func (c *apiServiceClient) StoreDelete(ctx context.Context, in *StoreDeleteReque
 	return out, nil
 }
 
+func (c *apiServiceClient) ProductList(ctx context.Context, in *ProductListRequest, opts ...grpc.CallOption) (*ProductListResponse, error) {
+	out := new(ProductListResponse)
+	err := c.cc.Invoke(ctx, "/swing.v1.ApiService/ProductList", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *apiServiceClient) ProductDetail(ctx context.Context, in *ProductDetailRequest, opts ...grpc.CallOption) (*ProductDetailResponse, error) {
+	out := new(ProductDetailResponse)
+	err := c.cc.Invoke(ctx, "/swing.v1.ApiService/ProductDetail", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *apiServiceClient) ProductCreate(ctx context.Context, in *ProductCreateRequest, opts ...grpc.CallOption) (*ProductCreateResponse, error) {
+	out := new(ProductCreateResponse)
+	err := c.cc.Invoke(ctx, "/swing.v1.ApiService/ProductCreate", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *apiServiceClient) ProductDelete(ctx context.Context, in *ProductDeleteRequest, opts ...grpc.CallOption) (*ProductDeleteResponse, error) {
+	out := new(ProductDeleteResponse)
+	err := c.cc.Invoke(ctx, "/swing.v1.ApiService/ProductDelete", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ApiServiceServer is the server API for ApiService service.
 // All implementations must embed UnimplementedApiServiceServer
 // for forward compatibility
@@ -91,6 +131,10 @@ type ApiServiceServer interface {
 	StoreDetail(context.Context, *StoreDetailRequest) (*StoreDetailResponse, error)
 	StoreCreate(context.Context, *StoreCreateRequest) (*StoreCreateResponse, error)
 	StoreDelete(context.Context, *StoreDeleteRequest) (*StoreDeleteResponse, error)
+	ProductList(context.Context, *ProductListRequest) (*ProductListResponse, error)
+	ProductDetail(context.Context, *ProductDetailRequest) (*ProductDetailResponse, error)
+	ProductCreate(context.Context, *ProductCreateRequest) (*ProductCreateResponse, error)
+	ProductDelete(context.Context, *ProductDeleteRequest) (*ProductDeleteResponse, error)
 	mustEmbedUnimplementedApiServiceServer()
 }
 
@@ -112,6 +156,18 @@ func (UnimplementedApiServiceServer) StoreCreate(context.Context, *StoreCreateRe
 }
 func (UnimplementedApiServiceServer) StoreDelete(context.Context, *StoreDeleteRequest) (*StoreDeleteResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StoreDelete not implemented")
+}
+func (UnimplementedApiServiceServer) ProductList(context.Context, *ProductListRequest) (*ProductListResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ProductList not implemented")
+}
+func (UnimplementedApiServiceServer) ProductDetail(context.Context, *ProductDetailRequest) (*ProductDetailResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ProductDetail not implemented")
+}
+func (UnimplementedApiServiceServer) ProductCreate(context.Context, *ProductCreateRequest) (*ProductCreateResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ProductCreate not implemented")
+}
+func (UnimplementedApiServiceServer) ProductDelete(context.Context, *ProductDeleteRequest) (*ProductDeleteResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ProductDelete not implemented")
 }
 func (UnimplementedApiServiceServer) mustEmbedUnimplementedApiServiceServer() {}
 
@@ -216,6 +272,78 @@ func _ApiService_StoreDelete_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ApiService_ProductList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ProductListRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ApiServiceServer).ProductList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/swing.v1.ApiService/ProductList",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ApiServiceServer).ProductList(ctx, req.(*ProductListRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ApiService_ProductDetail_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ProductDetailRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ApiServiceServer).ProductDetail(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/swing.v1.ApiService/ProductDetail",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ApiServiceServer).ProductDetail(ctx, req.(*ProductDetailRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ApiService_ProductCreate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ProductCreateRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ApiServiceServer).ProductCreate(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/swing.v1.ApiService/ProductCreate",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ApiServiceServer).ProductCreate(ctx, req.(*ProductCreateRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ApiService_ProductDelete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ProductDeleteRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ApiServiceServer).ProductDelete(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/swing.v1.ApiService/ProductDelete",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ApiServiceServer).ProductDelete(ctx, req.(*ProductDeleteRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // ApiService_ServiceDesc is the grpc.ServiceDesc for ApiService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -242,6 +370,22 @@ var ApiService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "StoreDelete",
 			Handler:    _ApiService_StoreDelete_Handler,
+		},
+		{
+			MethodName: "ProductList",
+			Handler:    _ApiService_ProductList_Handler,
+		},
+		{
+			MethodName: "ProductDetail",
+			Handler:    _ApiService_ProductDetail_Handler,
+		},
+		{
+			MethodName: "ProductCreate",
+			Handler:    _ApiService_ProductCreate_Handler,
+		},
+		{
+			MethodName: "ProductDelete",
+			Handler:    _ApiService_ProductDelete_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
