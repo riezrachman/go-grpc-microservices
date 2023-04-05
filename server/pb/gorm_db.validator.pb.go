@@ -72,5 +72,10 @@ func (this *Product) Validate() error {
 			return github_com_mwitkow_go_proto_validators.FieldError("UpdatedAt", err)
 		}
 	}
+	if this.DeletedAt != nil {
+		if err := github_com_mwitkow_go_proto_validators.CallValidatorIfExists(this.DeletedAt); err != nil {
+			return github_com_mwitkow_go_proto_validators.FieldError("DeletedAt", err)
+		}
+	}
 	return nil
 }

@@ -273,6 +273,10 @@
             "schema": {
               "type": "object",
               "properties": {
+                "storeId": {
+                  "type": "integer",
+                  "format": "int32"
+                },
                 "data": {
                   "$ref": "#/definitions/v1Product"
                 }
@@ -609,6 +613,11 @@
           "type": "string",
           "format": "date-time",
           "readOnly": true
+        },
+        "deletedAt": {
+          "type": "string",
+          "format": "date-time",
+          "readOnly": true
         }
       }
     },
@@ -616,6 +625,10 @@
       "type": "object",
       "properties": {
         "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "storeId": {
           "type": "integer",
           "format": "int32"
         },
@@ -638,7 +651,7 @@
           "type": "string"
         },
         "data": {
-          "$ref": "#/definitions/v1Product"
+          "$ref": "#/definitions/v1TProduct"
         }
       }
     },
@@ -656,7 +669,7 @@
           "type": "string"
         },
         "data": {
-          "$ref": "#/definitions/v1Product"
+          "$ref": "#/definitions/v1TProduct"
         }
       }
     },
@@ -674,7 +687,7 @@
           "type": "string"
         },
         "data": {
-          "$ref": "#/definitions/v1Product"
+          "$ref": "#/definitions/v1TProduct"
         }
       }
     },
@@ -694,7 +707,7 @@
         "data": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/v1Product"
+            "$ref": "#/definitions/v1TProduct"
           }
         },
         "pagination": {
@@ -841,6 +854,81 @@
         },
         "pagination": {
           "$ref": "#/definitions/v1PaginationResponse"
+        }
+      }
+    },
+    "v1TProduct": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32",
+          "readOnly": true
+        },
+        "title": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        },
+        "price": {
+          "type": "number",
+          "format": "float"
+        },
+        "description": {
+          "type": "string"
+        },
+        "store": {
+          "$ref": "#/definitions/v1TStore"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "readOnly": true
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "readOnly": true
+        }
+      }
+    },
+    "v1TStore": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "name": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        },
+        "address": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "operationalTimeStart": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "operationalTimeEnd": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "readOnly": true
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "readOnly": true
         }
       }
     }

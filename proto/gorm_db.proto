@@ -79,5 +79,6 @@ message Product {
 
     google.protobuf.Timestamp createdAt = 101 [(google.api.field_behavior) = OUTPUT_ONLY, (gorm.field).tag = {not_null: false default: "CURRENT_TIMESTAMP"}];
     google.protobuf.Timestamp updatedAt = 102 [(google.api.field_behavior) = OUTPUT_ONLY, (gorm.field).tag = {not_null: false default: "CURRENT_TIMESTAMP"}];
+    google.protobuf.Timestamp deletedAt = 103 [(google.api.field_behavior) = OUTPUT_ONLY, (gorm.field).tag = {not_null: false}];
 
 }

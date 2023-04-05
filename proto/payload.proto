@@ -7,6 +7,7 @@ import "protoc-gen-openapiv2/options/annotations.proto";
 // import "mwitkow/go-proto-validators/validator.proto";
 
 import "core.proto";
+import "type.proto";
 import "gorm_db.proto";
 
 package swing.v1;
@@ -122,7 +123,7 @@ message ProductListResponse {
   bool error = 1;
   int32 code = 2;
   string message = 3;
-  repeated Product data = 4;
+  repeated TProduct data = 4;
   PaginationResponse pagination = 5;
 
 }
@@ -138,14 +139,15 @@ message ProductDetailResponse {
   bool error = 1;
   int32 code = 2;
   string message = 3;
-  Product data = 4;
+  TProduct data = 4;
 
 }
 
 message ProductCreateRequest {
 
   int32 id = 1;
-  Product data = 2;
+  int32 storeId = 2;
+  Product data = 3;
 
 }
 
@@ -154,7 +156,7 @@ message ProductCreateResponse {
   bool error = 1;
   int32 code = 2;
   string message = 3;
-  Product data = 4;
+  TProduct data = 4;
 
 }
 
@@ -170,6 +172,6 @@ message ProductDeleteResponse {
   bool error = 1;
   int32 code = 2;
   string message = 3;
-  Product data = 4;
+  TProduct data = 4;
 
 }

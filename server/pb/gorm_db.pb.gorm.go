@@ -250,6 +250,7 @@ type StoreWithAfterToPB interface {
 
 type ProductORM struct {
 	CreatedAt   *time.Time `gorm:"default:CURRENT_TIMESTAMP"`
+	DeletedAt   *time.Time
 	Description string
 	Id          int32 `gorm:"primary_key;unique;not null;auto_increment"`
 	Price       float32
@@ -287,6 +288,10 @@ func (m *Product) ToORM(ctx context.Context) (ProductORM, error) {
 		t := m.UpdatedAt.AsTime()
 		to.UpdatedAt = &t
 	}
+	if m.DeletedAt != nil {
+		t := m.DeletedAt.AsTime()
+		to.DeletedAt = &t
+	}
 	if posthook, ok := interface{}(m).(ProductWithAfterToORM); ok {
 		err = posthook.AfterToORM(ctx, &to)
 	}
@@ -313,6 +318,9 @@ func (m *ProductORM) ToPB(ctx context.Context) (Product, error) {
 	}
 	if m.UpdatedAt != nil {
 		to.UpdatedAt = timestamppb.New(*m.UpdatedAt)
+	}
+	if m.DeletedAt != nil {
+		to.DeletedAt = timestamppb.New(*m.DeletedAt)
 	}
 	if posthook, ok := interface{}(m).(ProductWithAfterToPB); ok {
 		err = posthook.AfterToPB(ctx, &to)
@@ -1513,6 +1521,7 @@ func DefaultApplyFieldMaskProduct(ctx context.Context, patchee *Product, patcher
 	var err error
 	var updatedCreatedAt bool
 	var updatedUpdatedAt bool
+	var updatedDeletedAt bool
 	for i, f := range updateMask.Paths {
 		if f == prefix+"Id" {
 			patchee.Id = patcher.Id
@@ -1578,6 +1587,29 @@ func DefaultApplyFieldMaskProduct(ctx context.Context, patchee *Product, patcher
 		if f == prefix+"UpdatedAt" {
 			updatedUpdatedAt = true
 			patchee.UpdatedAt = patcher.UpdatedAt
+			continue
+		}
+		if !updatedDeletedAt && strings.HasPrefix(f, prefix+"DeletedAt.") {
+			if patcher.DeletedAt == nil {
+				patchee.DeletedAt = nil
+				continue
+			}
+			if patchee.DeletedAt == nil {
+				patchee.DeletedAt = &timestamppb.Timestamp{}
+			}
+			childMask := &field_mask.FieldMask{}
+			for j := i; j < len(updateMask.Paths); j++ {
+				if trimPath := strings.TrimPrefix(updateMask.Paths[j], prefix+"DeletedAt."); trimPath != updateMask.Paths[j] {
+					childMask.Paths = append(childMask.Paths, trimPath)
+				}
+			}
+			if err := gorm1.MergeWithMask(patcher.DeletedAt, patchee.DeletedAt, childMask); err != nil {
+				return nil, nil
+			}
+		}
+		if f == prefix+"DeletedAt" {
+			updatedDeletedAt = true
+			patchee.DeletedAt = patcher.DeletedAt
 			continue
 		}
 	}
