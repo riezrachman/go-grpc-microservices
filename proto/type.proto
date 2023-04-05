@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+// import "google/protobuf/timestamp.proto";
+// import "google/api/field_behavior.proto";
+// import "google/protobuf/struct.proto";
+// import "protoc-gen-openapiv2/options/annotations.proto";
+// import "mwitkow/go-proto-validators/validator.proto";
+
+// import "core.proto";
+// import "gorm_db.proto";
+
+package swing.v1;
+option go_package = "./pb";

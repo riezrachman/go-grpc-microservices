@@ -1,0 +1,44 @@
+syntax = "proto3";
+
+// import "google/protobuf/any.proto";
+// import "google/api/field_behavior.proto";
+// import "google/protobuf/struct.proto";
+import "protoc-gen-openapiv2/options/annotations.proto";
+// import "mwitkow/go-proto-validators/validator.proto";
+
+import "core.proto";
+import "gorm_db.proto";
+
+package swing.v1;
+option go_package = "./pb";
+
+message StoreListRequest {
+
+    int32 limit = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+		description: "Limit data per page. Default value '-1' for disable limit",
+	}];
+    int32 page = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+		description: "Page number to get data. Default value '-1' for disable page",
+	}];
+    string filter = 3;
+    string query = 4;
+    Store data = 5;
+
+    string sort = 11 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+		description: "Order data by column name",
+	}];
+    Direction dir = 12 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+		description: "Order direction",
+	}];
+
+}
+
+message StoreListResponse {
+
+    bool error = 1;
+    int32 code = 2;
+    string message = 3;
+    repeated Store data = 4;
+    PaginationResponse pagination = 5;
+
+}

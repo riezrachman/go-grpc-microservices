@@ -1,0 +1,80 @@
+syntax = "proto3";
+
+import "google/api/field_behavior.proto";
+import "protoc-gen-gorm/options/gorm.proto";
+// import "mwitkow/go-proto-validators/validator.proto";
+// import "protoc-gen-openapiv2/options/annotations.proto";
+import "google/protobuf/timestamp.proto";
+
+package swing.v1;
+option go_package = "./pb";
+
+message User {
+
+    option (gorm.opts) = {
+        ormable: true,
+        table: "users",
+    };
+    
+    int32 id = 1 [
+        (gorm.field).tag = {primary_key: true unique: true not_null: true auto_increment: true}
+    ];
+
+    string username = 2 [(gorm.field).tag = {not_null: false}];
+    string password = 3 [(gorm.field).tag = {not_null: false}];
+    string fullname = 4 [(gorm.field).tag = {not_null: false}];
+    string email = 5 [(gorm.field).tag = {not_null: false}];
+    bool isActive = 6 [(gorm.field).tag = {not_null: false default: "false"}];
+
+    google.protobuf.Timestamp createdAt = 101 [(google.api.field_behavior) = OUTPUT_ONLY, (gorm.field).tag = {not_null: false default: "CURRENT_TIMESTAMP"}];
+    google.protobuf.Timestamp updatedAt = 102 [(google.api.field_behavior) = OUTPUT_ONLY, (gorm.field).tag = {not_null: false default: "CURRENT_TIMESTAMP"}];
+    google.protobuf.Timestamp deletedAt = 103 [(google.api.field_behavior) = OUTPUT_ONLY, (gorm.field).tag = {not_null: false}];
+
+}
+
+message Store {
+
+    option (gorm.opts) = {
+        ormable: true,
+        table: "stores",
+    };
+    
+    int32 id = 1 [
+        (gorm.field).tag = {primary_key: true unique: true not_null: true auto_increment: true}
+    ];
+
+    string name = 2 [(gorm.field).tag = {not_null: false}];
+    string url = 3 [(gorm.field).tag = {not_null: false}];
+    string address = 4 [(gorm.field).tag = {not_null: false}];
+    string phone = 5 [(gorm.field).tag = {not_null: false}];
+    int32 operational_time_start = 6 [(gorm.field).tag = {not_null: false}];
+    int32 operational_time_end = 7 [(gorm.field).tag = {not_null: false}];
+
+    repeated Product products = 51;
+
+    google.protobuf.Timestamp createdAt = 101 [(google.api.field_behavior) = OUTPUT_ONLY, (gorm.field).tag = {not_null: false default: "CURRENT_TIMESTAMP"}];
+    google.protobuf.Timestamp updatedAt = 102 [(google.api.field_behavior) = OUTPUT_ONLY, (gorm.field).tag = {not_null: false default: "CURRENT_TIMESTAMP"}];
+    google.protobuf.Timestamp deletedAt = 103 [(google.api.field_behavior) = OUTPUT_ONLY, (gorm.field).tag = {not_null: false}];
+
+}
+
+message Product {
+
+    option (gorm.opts) = {
+        ormable: true,
+        table: "products",
+    };
+    
+    int32 id = 1 [
+        (gorm.field).tag = {primary_key: true unique: true not_null: true auto_increment: true}
+    ];
+
+    string title = 2 [(gorm.field).tag = {not_null: false}];
+    string url = 3 [(gorm.field).tag = {not_null: false}];
+    float price = 4 [(gorm.field).tag = {not_null: false}];
+    string description = 5 [(gorm.field).tag = {not_null: false}];
+
+    google.protobuf.Timestamp createdAt = 101 [(google.api.field_behavior) = OUTPUT_ONLY, (gorm.field).tag = {not_null: false default: "CURRENT_TIMESTAMP"}];
+    google.protobuf.Timestamp updatedAt = 102 [(google.api.field_behavior) = OUTPUT_ONLY, (gorm.field).tag = {not_null: false default: "CURRENT_TIMESTAMP"}];
+
+}
